@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../components/card';
 import FormGroup from '../components/form-group';
+import { withRouter } from 'react-router-dom';
 
 class CadastroUsuario extends React.Component {
 
@@ -9,6 +10,10 @@ class CadastroUsuario extends React.Component {
         email: '',
         senha: '',
         senhaRepeticao: ''
+    }
+
+    cancelar = () => {
+        this.props.history.push('/login');
     }
 
     render() {
@@ -48,7 +53,7 @@ class CadastroUsuario extends React.Component {
                                     </FormGroup>
                                     <br/>
                                     <button className="btn btn-success">Salvar</button>
-                                    <button className="btn btn-danger">Cancelar</button>
+                                    <button onClick={this.cancelar} className="btn btn-danger">Cancelar</button>
                                 </fieldset>
                             </div>
                         </div>
@@ -58,4 +63,4 @@ class CadastroUsuario extends React.Component {
     }
 }
 
-export default CadastroUsuario;
+export default withRouter( CadastroUsuario );
