@@ -14,11 +14,15 @@ class Login extends React.Component{
     }
 
     entrar = () => {
-        axios
-        .post('http://localhost:8080/usuario/autenticar', {
+        axios.post('http://localhost:8080/usuario/autenticar', {
             email: this.state.email,
             senha: this.state.senha
-        }).then((response) => {this.props.history.push('/home')}).catch((erro) => {this.setState({mensagemErro: erro.response.data})})
+        }).then((response) => {
+            this.props.history.push('/home')
+        }).catch((erro) => {
+            console.log('entrou no erro')
+            this.setState({mensagemErro: erro.response.data})
+        });
     }
 
     prepareCadastrar = () => {
