@@ -2,6 +2,7 @@ import React from 'react';
 import Card from '../components/card';
 import FormGroup from '../components/form-group';
 import { withRouter } from 'react-router-dom';
+import Constants from '../utils/constants';
 
 import UsuarioService from '../app/service/usuarioService';
 import { mensagemErro, mensagemSucesso } from '../components/toastr';
@@ -27,13 +28,13 @@ class CadastroUsuario extends React.Component {
     validar = () => {
         const mensagem = [];
 
-        if(!this.state.nome) mensagem.push('O nome é obrigatório.');
+        if(!this.state.nome) mensagem.push(Constants.NOME_OBRIGATORIO);
 
-        if(!this.state.email) mensagem.push('O campo email é obrigatório.');
-        else if(!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)) mensagem.push('Informe um email válido.');
+        if(!this.state.email) mensagem.push(Constants.EMAIL_OBRIGATORIO);
+        else if(!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)) mensagem.push(Constants.EMAIL_INVALIDO);
 
-        if(!this.state.senha || !this.state.senhaRepeticao) mensagem.push('Digite a senha duas vezes.');
-        else if(this.state.senha !== this.state.senhaRepeticao) mensagem.push('As senhas precisam ser iguais.')
+        if(!this.state.senha || !this.state.senhaRepeticao) mensagem.push(Constants.SENHA_REPETIR);
+        else if(this.state.senha !== this.state.senhaRepeticao) mensagem.push(Constants.SENHA_DIFERENTE);
 
         return mensagem;
     }
@@ -46,8 +47,8 @@ class CadastroUsuario extends React.Component {
             });
             return false;
         }
-        const usuario = { email: this.state.email, nome: this.state.nome, senha: this.state.senha }
-        this.usuarioService.salvar(usuario).then((response) => {
+        const state = { email: this.state.email, nome: this.state.nome, senha: this.state.senha }
+        this.usuarioService.salvar(state).then((response) => {
             mensagemSucesso('Usuário cadastrado! Faça o login para acessar o sistema')
             this.redirectLogin();
         }).catch(erro => {
