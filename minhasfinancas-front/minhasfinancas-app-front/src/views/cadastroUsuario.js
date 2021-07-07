@@ -47,8 +47,8 @@ class CadastroUsuario extends React.Component {
             });
             return false;
         }
-        const state = { email: this.state.email, nome: this.state.nome, senha: this.state.senha }
-        this.usuarioService.salvar(state).then((response) => {
+        const usuario = { email: this.state.email, nome: this.state.nome, senha: this.state.senha }
+        this.usuarioService.salvar(usuario).then((response) => {
             mensagemSucesso('Usuário cadastrado! Faça o login para acessar o sistema')
             this.redirectLogin();
         }).catch(erro => {
