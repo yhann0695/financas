@@ -117,7 +117,7 @@ class ConsultaLancamento extends React.Component {
                             </FormGroup>
                             <br/>
                             <button onClick={this.buscar} className="btn btn-success">Buscar</button>
-                            <button className="btn btn-danger">Cancelar</button>
+                            <button onClick={this.cancelarExclusao} className="btn btn-danger">Cancelar</button>
                         </div>
                     </div>
                 </div>
