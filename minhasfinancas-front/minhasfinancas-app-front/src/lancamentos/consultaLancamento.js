@@ -9,6 +9,8 @@ import LancamentoService from '../app/service/lancamentoService';
 import LocalStorageService from '../app/service/localstorageService';
 
 import * as messages from '../components/toastr';
+import { Dialog } from 'primereact/dialog';
+import { Button } from 'primereact/button';
 
 class ConsultaLancamento extends React.Component {
 
@@ -17,12 +19,38 @@ class ConsultaLancamento extends React.Component {
         mes: '',
         tipo: '',
         descricao: '',
+        showConfirmDialog: false,
+        lancamentoExcluir: {},
         lancamentos: []
     }
 
     constructor(){
         super();
-        this.service = new LancamentoService;
+        this.service = new LancamentoService();
+    }
+
+    editarAction = () => {
+        console.log('editar')
+    }
+
+    abrirConfirmacao = (lancamento) => {
+        this.setState({ showConfirmDialog: true, lancamentoExcluir: lancamento }) 
+    }
+
+    excluirAction = () => {
+        this.service.excluir(this.state.lancamentoExcluir.id).then((response) => {
+            const lancamentos = this.state.lancamentos;
+            const index = lancamentos.indexOf(this.state.lancamentoExcluir);
+            lancamentos.splice(index, 1);
+            this.setState({ lancamentos: lancamentos, showConfirmDialog: false });
+            messages.mensagemSucesso('Lançamento excluído');
+        }).catch((error) => {
+            messages.mensagemErro('Não foi possível excluir o lançamento');
+        })
+    }
+
+    cancelarExclusao = () => {
+        this.setState({ showConfirmDialog: false, lancamentoExcluir: {} })
     }
 
     buscar = () => {
@@ -51,6 +79,13 @@ class ConsultaLancamento extends React.Component {
     render() {
         const meses = this.service.comboMes();
         const tipos = this.service.comboTipos();
+
+        const confirmDialogFooter = (
+            <div>
+                <Button label="Confirmar" icon="pi pi-check" onClick={() => this.excluirAction()}  autoFocus />
+                <Button label="Cancelar"  icon="pi pi-times" onClick={() => this.cancelarExclusao()} className="p-button-text" />
+            </div>
+        )
 
         return (
             <Card title="Consulta Lançamentos">
@@ -90,10 +125,20 @@ class ConsultaLancamento extends React.Component {
                 <div className="row">
                     <div className="col-md-12">
                         <div className="bs-component">
-                            <LancamentoTable lancamentos={this.state.lancamentos} />
+                            <LancamentoTable lancamentos={this.state.lancamentos}
+                                            editarAction={this.editar}
+                                            excluirAction={this.abrirConfirmacao} />
                         </div>
                     </div>
                 </div>
+                <Dialog header="Confirme sua decisão" 
+                        visible={this.state.showConfirmDialog} 
+                        style={{ width: '50vw' }}
+                        footer={confirmDialogFooter} 
+                        modal={true} 
+                        onHide={() => this.setState({showConfirmDialog: false})}>
+                    <p>Tem certeza que deseja excluir o lançamento?</p>
+                </Dialog>
             </Card>
         )
     }

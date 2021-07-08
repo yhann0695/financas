@@ -45,4 +45,8 @@ export default class LancamentoService extends ApiService {
 
         return this.get(`/pesquisa${params}`);
     }
+
+    excluir(id) { 
+        return this.delete(`/${id}`)
+    }
 }
