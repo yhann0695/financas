@@ -5,7 +5,6 @@ import com.financas.minhasfinancas.dto.LancamentoDTO;
 import com.financas.minhasfinancas.exceptions.RegraNegocioException;
 import com.financas.minhasfinancas.model.Lancamento;
 import com.financas.minhasfinancas.repository.LancamentoRepository;
-import com.financas.minhasfinancas.repository.UsuarioRepository;
 import com.financas.minhasfinancas.utils.Mensagens;
 import com.financas.minhasfinancas.utils.enums.StatusLancamento;
 import com.financas.minhasfinancas.utils.enums.TipoLancamento;
@@ -22,9 +21,6 @@ public class LancamentoService {
     
     @Autowired
     private LancamentoRepository lancamentoRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     public void cadastrar(LancamentoDTO lancamento) {
         this.validarDados(lancamento);
@@ -53,8 +49,8 @@ public class LancamentoService {
                 .collect(Collectors.toList());
     }
 
-    public List<LancamentoDTO> pesquisar(String descricao, Integer mes, Integer ano) {
-        return lancamentoRepository.listarLancamentos(descricao, mes, ano)
+    public List<LancamentoDTO> pesquisar(String descricao, Integer mes, Integer ano, Long usuario) {
+        return lancamentoRepository.listarLancamentos(descricao, mes, ano, usuario)
                 .stream()
                 .map(LancamentoDTO::new)
                 .collect(Collectors.toList());

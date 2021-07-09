@@ -36,9 +36,10 @@ public class LancamentoController {
     @GetMapping("/pesquisa")
     public ResponseEntity<List<LancamentoDTO>> pesquisar(@RequestParam(value = "descricao", required = false) String descricao ,
                                                          @RequestParam(value = "mes", required = false) Integer mes,
-                                                         @RequestParam(value = "ano", required = false) Integer ano) {
+                                                         @RequestParam(value = "ano", required = false) Integer ano,
+                                                         @RequestParam(value = "usuario", required = false) Long usuario) {
 
-        return ResponseEntity.ok(lancamentoService.pesquisar(descricao, mes, ano));
+        return ResponseEntity.ok(lancamentoService.pesquisar(descricao, mes, ano, usuario));
     }
 
     @DeleteMapping("/{id}")

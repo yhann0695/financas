@@ -15,7 +15,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryCustom{
     private EntityManager em;
 
     @Override
-    public List<Lancamento> listarLancamentos(String descricao, Integer mes, Integer ano) {
+    public List<Lancamento> listarLancamentos(String descricao, Integer mes, Integer ano, Long usuario) {
        String query = "select l from Lancamento as l ";
        String condicao = "where";
        String descricaoo = " (:descricao = null or UPPER(l.descricao) LIKE '%' || UPPER(:descricao) || '%')";
@@ -32,6 +32,11 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryCustom{
 
         if(ano != null) {
             query += condicao + " l.ano = :ano";
+            condicao = " and";
+        }
+
+        if(usuario != null) {
+            query += condicao + " l.usuario.id = :usuario";
         }
 
         TypedQuery<Lancamento> lancamentoTypedQuery = em.createQuery(query, Lancamento.class);
@@ -43,6 +48,8 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryCustom{
 
 
         if(ano != null) lancamentoTypedQuery.setParameter("ano", ano);
+
+        if(usuario != null) lancamentoTypedQuery.setParameter("usuario", usuario);
 
         return lancamentoTypedQuery.getResultList();
     }

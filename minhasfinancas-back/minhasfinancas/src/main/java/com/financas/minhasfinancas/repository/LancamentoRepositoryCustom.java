@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface LancamentoRepositoryCustom {
 
-    List<Lancamento> listarLancamentos(String descricao, Integer mes, Integer ano);
+    List<Lancamento> listarLancamentos(String descricao, Integer mes, Integer ano, Long usuario);
 }
