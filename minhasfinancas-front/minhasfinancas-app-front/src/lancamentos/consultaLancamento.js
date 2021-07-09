@@ -53,6 +53,10 @@ class ConsultaLancamento extends React.Component {
         this.setState({ showConfirmDialog: false, lancamentoExcluir: {} })
     }
 
+    cadastrarLancamento = () => {
+        this.props.history.push('/cadastroLancamento');
+    }
+
     buscar = () => {
         if(!this.state.ano) {
             messages.mensagemErro('É preciso que seja informado o "Ano" do lançamento!')
@@ -117,7 +121,7 @@ class ConsultaLancamento extends React.Component {
                             </FormGroup>
                             <br/>
                             <button onClick={this.buscar} className="btn btn-success">Buscar</button>
-                            <button onClick={this.cancelarExclusao} className="btn btn-danger">Cancelar</button>
+                            <button onClick={this.cadastrarLancamento} className="btn btn-danger">Cadastrar</button>
                         </div>
                     </div>
                 </div>
