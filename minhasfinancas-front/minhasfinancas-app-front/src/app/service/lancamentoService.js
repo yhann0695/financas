@@ -4,7 +4,7 @@ export default class LancamentoService extends ApiService {
 
     constructor() {super('/lancamento')}
 
-    comboTipos() {
+    comboTipos = () => {
         return [
             { label: 'selecione...', value: '' },
             { label: 'Despesa', value: 'DESPESA' },
@@ -12,7 +12,7 @@ export default class LancamentoService extends ApiService {
         ];
     }
 
-    comboMes() {
+    comboMes = () => {
         return [
             { label: 'Selecione...', value: '' },
             { label: 'Janeiro', value: 1 },
@@ -30,7 +30,7 @@ export default class LancamentoService extends ApiService {
         ];
     }
 
-    consultar(lancamentoFiltro) { 
+    consultar = (lancamentoFiltro) => { 
         let params = `?ano=${lancamentoFiltro.ano}`;
 
         if(lancamentoFiltro.mes) params = `${params}&mes=${lancamentoFiltro.mes}`;
@@ -46,9 +46,11 @@ export default class LancamentoService extends ApiService {
         return this.get(`/pesquisa${params}`);
     }
 
-    excluir(id) { 
-        return this.delete(`/${id}`)
-    }
+    excluir = (id) => { return this.delete(`/${id}`) }
 
-    salvar(lancamento) { return this.post('/', lancamento) }
+    obterLancamento = (id) => { return this.get(`/${id}`) }
+
+    salvar = (lancamento) => { return this.post('/', lancamento) }
+
+    atualizar = (lancamento) => { return this.put(`/${lancamento.id}`, lancamento) }
 }

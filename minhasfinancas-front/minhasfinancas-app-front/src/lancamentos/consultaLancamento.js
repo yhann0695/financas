@@ -29,8 +29,8 @@ class ConsultaLancamento extends React.Component {
         this.service = new LancamentoService();
     }
 
-    editarAction = () => {
-        console.log('editar')
+    editarAction = (id) => {
+        this.props.history.push(`/cadastroLancamento/${id}`);
     }
 
     abrirConfirmacao = (lancamento) => {
@@ -130,7 +130,7 @@ class ConsultaLancamento extends React.Component {
                     <div className="col-md-12">
                         <div className="bs-component">
                             <LancamentoTable lancamentos={this.state.lancamentos}
-                                            editarAction={this.editar}
+                                            editarAction={this.editarAction}
                                             excluirAction={this.abrirConfirmacao} />
                         </div>
                     </div>
