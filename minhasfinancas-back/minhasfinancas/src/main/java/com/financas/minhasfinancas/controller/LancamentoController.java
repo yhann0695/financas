@@ -22,7 +22,7 @@ public class LancamentoController {
         lancamentoService.cadastrar(lancamento);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public void alterar(@RequestBody LancamentoDTO lancamento, @PathVariable Long id) {
         lancamentoService.alterar(id, lancamento);
     }
@@ -36,9 +36,15 @@ public class LancamentoController {
     @GetMapping("/pesquisa")
     public ResponseEntity<List<LancamentoDTO>> pesquisar(@RequestParam(value = "descricao", required = false) String descricao ,
                                                          @RequestParam(value = "mes", required = false) Integer mes,
-                                                         @RequestParam(value = "ano", required = false) Integer ano) {
+                                                         @RequestParam(value = "ano", required = false) Integer ano,
+                                                         @RequestParam(value = "usuario", required = false) Long usuario) {
 
-        return ResponseEntity.ok(lancamentoService.pesquisar(descricao, mes, ano));
+        return ResponseEntity.ok(lancamentoService.pesquisar(descricao, mes, ano, usuario));
+    }
+
+    @GetMapping("/{id}")
+    public LancamentoDTO obterLancamento(@PathVariable Long id) {
+        return lancamentoService.obterLancamento(id);
     }
 
     @DeleteMapping("/{id}")
