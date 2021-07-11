@@ -49,6 +49,19 @@ class ConsultaLancamento extends React.Component {
         })
     }
 
+    alterarStatus = (lancamento, status) => {
+        this.service.alterarStatus(lancamento.id, status).then((response) => {
+            const lancamentos = this.state.lancamentos;
+            const index = lancamentos.indexOf(lancamento);
+            if(index !== -1) {
+                lancamento['status'] = status;
+                lancamentos[index] = lancamento;
+                this.setState( {lancamentos} );
+            }
+            messages.mensagemSucesso('Status atualizado');
+        })
+    }
+
     cancelarExclusao = () => {
         this.setState({ showConfirmDialog: false, lancamentoExcluir: {} })
     }
@@ -120,8 +133,8 @@ class ConsultaLancamento extends React.Component {
                                             onChange={e => this.setState({tipo: e.target.value})} />
                             </FormGroup>
                             <br/>
-                            <button onClick={this.buscar} className="btn btn-success">Buscar</button>
-                            <button onClick={this.cadastrarLancamento} className="btn btn-danger">Cadastrar</button>
+                            <button onClick={this.buscar} className="btn btn-success"><i className="pi pi-search"> Pesquisar</i></button>
+                            <button onClick={this.cadastrarLancamento} className="btn btn-danger"><i className="pi pi-plus"> Cadastrar</i></button>
                         </div>
                     </div>
                 </div>
@@ -131,7 +144,8 @@ class ConsultaLancamento extends React.Component {
                         <div className="bs-component">
                             <LancamentoTable lancamentos={this.state.lancamentos}
                                             editarAction={this.editarAction}
-                                            excluirAction={this.abrirConfirmacao} />
+                                            excluirAction={this.abrirConfirmacao}
+                                            alterarStatus={this.alterarStatus} />
                         </div>
                     </div>
                 </div>

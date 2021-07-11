@@ -61,6 +61,8 @@ export default class LancamentoService extends ApiService {
         if(erros && erros.length > 0) { throw new ErroValidacao(erros) }
     }
 
+    alterarStatus = (id, status) => { return this.put(`/${id}/atualizar-status`, { status }) }
+
     excluir = (id) => { return this.delete(`/${id}`) }
 
     obterLancamento = (id) => { return this.get(`/${id}`) }
