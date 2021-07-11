@@ -1,5 +1,8 @@
 import ApiService from '../apiservice'
 
+import ErroValidacao from '../exception/erroValidacao';
+import Constants from '../../utils/constants';
+
 export default class LancamentoService extends ApiService {
 
     constructor() {super('/lancamento')}
@@ -44,6 +47,18 @@ export default class LancamentoService extends ApiService {
         if(lancamentoFiltro.descricao) params = `${params}&descricao=${lancamentoFiltro.descricao}`;
 
         return this.get(`/pesquisa${params}`);
+    }
+
+    validar = (lancamento) => { 
+        const erros = [];
+
+        if(!lancamento.ano) { erros.push(Constants.INFORME_ANO) }
+        if(!lancamento.mes) { erros.push(Constants.INFORME_MES) }
+        if(!lancamento.descricao) { erros.push(Constants.INFORME_DESCRICAO) }
+        if(!lancamento.tipo) { erros.push(Constants.INFORME_TIPO) }
+        if(!lancamento.valor) { erros.push(Constants.INFORME_VALOR) }
+
+        if(erros && erros.length > 0) { throw new ErroValidacao(erros) }
     }
 
     excluir = (id) => { return this.delete(`/${id}`) }

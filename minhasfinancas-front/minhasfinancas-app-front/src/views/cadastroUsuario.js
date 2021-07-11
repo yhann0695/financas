@@ -2,10 +2,9 @@ import React from 'react';
 import Card from '../components/card';
 import FormGroup from '../components/form-group';
 import { withRouter } from 'react-router-dom';
-import Constants from '../utils/constants';
 
 import UsuarioService from '../app/service/usuarioService';
-import { mensagemErro, mensagemSucesso } from '../components/toastr';
+import * as messages from '../components/toastr';
 
 class CadastroUsuario extends React.Component {
 
@@ -25,34 +24,23 @@ class CadastroUsuario extends React.Component {
         this.props.history.push('/login');
     }
 
-    validar = () => {
-        const mensagem = [];
-
-        if(!this.state.nome) mensagem.push(Constants.NOME_OBRIGATORIO);
-
-        if(!this.state.email) mensagem.push(Constants.EMAIL_OBRIGATORIO);
-        else if(!this.state.email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]/)) mensagem.push(Constants.EMAIL_INVALIDO);
-
-        if(!this.state.senha || !this.state.senhaRepeticao) mensagem.push(Constants.SENHA_REPETIR);
-        else if(this.state.senha !== this.state.senhaRepeticao) mensagem.push(Constants.SENHA_DIFERENTE);
-
-        return mensagem;
-    }
-
     cadastrar = () => {
-        const mensagens = this.validar();
-        if(mensagens && mensagens.length > 0) {
-            mensagens.forEach((mensagem, index) => {
-                mensagemErro(mensagem)
-            });
+        const { nome, email, senha, senhaRepeticao } = this.state;
+        const usuario = { nome, email, senha, senhaRepeticao }
+
+        try {
+            this.usuarioService.validar(usuario);
+        } catch (error) {
+            const msgs = error.mensagens;
+            msgs.forEach(msg => messages.mensagemErro(msg));
             return false;
         }
-        const usuario = { email: this.state.email, nome: this.state.nome, senha: this.state.senha }
+
         this.usuarioService.salvar(usuario).then((response) => {
-            mensagemSucesso('Usuário cadastrado! Faça o login para acessar o sistema')
+            messages.mensagemSucesso('Usuário cadastrado! Faça o login para acessar o sistema')
             this.redirectLogin();
         }).catch(erro => {
-            mensagemErro(erro.response.data)
+            messages.mensagemErro(erro.response.data)
         })
     }
 
