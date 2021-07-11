@@ -84,8 +84,8 @@ class CadastroUsuario extends React.Component {
                                             name="senhaRepeticao"/>
                                     </FormGroup>
                                     <br/>
-                                    <button onClick={this.cadastrar} className="btn btn-success">Salvar</button>
-                                    <button onClick={this.redirectLogin} className="btn btn-danger">Cancelar</button>
+                                    <button onClick={this.cadastrar} className="btn btn-success"><i className="pi pi-save"> Salvar</i></button>
+                                    <button onClick={this.redirectLogin} className="btn btn-danger"><i className="pi pi-times"> Cancelar</i></button>
                                 </fieldset>
                             </div>
                         </div>

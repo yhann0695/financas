@@ -71,10 +71,10 @@ class ConsultaLancamento extends React.Component {
     }
 
     buscar = () => {
-        if(!this.state.ano) {
-            messages.mensagemErro('É preciso que seja informado o "Ano" do lançamento!')
-            return false;
-        }
+        // if(!this.state.ano) {
+        //     messages.mensagemErro('É preciso que seja informado o "Ano" do lançamento!')
+        //     return false;
+        // }
 
         const usuarioLogado = LocalStorageService.obterItem('_usuario_logado');
 
@@ -87,7 +87,9 @@ class ConsultaLancamento extends React.Component {
         }
 
         this.service.consultar(lancamentoFiltro).then((response) => {
-            this.setState({lancamentos: response.data})
+            const lista = response.data;
+            if(lista.length < 1) {messages.mensagemAlert('Nenhum resultado encontrado.')}
+            this.setState({lancamentos: lista})
         }).catch(error => {
             console.log(error);
         })

@@ -64,11 +64,12 @@ class Login extends React.Component{
                                                         placeholder="Password" />
                                                 </FormGroup>
                                                 <br/>
-                                                <button onClick={this.entrar} className="btn btn-success">Entrar</button>
-                                                <button onClick={this.prepareCadastrar} className="btn btn-danger">Cadastrar</button>
                                         </fieldset>
                                     </div>
                                 </div>
+                                <button onClick={this.entrar} className="btn btn-success"><i className="pi pi-sign-in"> Entrar</i></button>
+                                <br />
+                                <button onClick={this.prepareCadastrar} className="btn btn-danger"><i className="pi pi-plus"> Cadastrar</i></button>
                             </div>
                         </Card>
                     </div>

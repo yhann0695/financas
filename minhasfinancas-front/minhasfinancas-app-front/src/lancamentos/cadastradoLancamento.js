@@ -140,11 +140,11 @@ class CadastroLancamento extends React.Component {
                 </div>
                 <br />
 
-                { this.state.atualizando ?  ( <button onClick={this.atualizar} className="btn btn-success">Atualizar</button> )
-                    : ( <button onClick={this.submit} className="btn btn-success">Salvar</button> ) }
+                { this.state.atualizando ?  ( <button onClick={this.atualizar} className="btn btn-success"><i className="pi pi-refresh"> Atualizar</i></button> )
+                    : ( <button onClick={this.submit} className="btn btn-success"><i className="pi pi-save"> Salvar</i></button> ) }
                     
                     
-                    <button onClick={this.cancelar} className="btn btn-danger">Cancelar</button>
+                    <button onClick={this.cancelar} className="btn btn-danger"><i className="pi pi-times"> Cancelar</i></button>
             </Card>
         )
     }
