@@ -1,8 +1,9 @@
 import React from 'react';
 
 import UsuarioService from '../app/service/usuarioService';
-import LocalStorageService from '../app/service/localstorageService';
 import currencyFormatter from 'currency-formatter';
+
+import { AuthContext } from '../main/provedorAutenticacao';
 
 class Home extends React.Component {
 
@@ -25,7 +26,7 @@ class Home extends React.Component {
     }
 
     usuarioLogadoId() {
-        const usuarioLogado = LocalStorageService.obterItem('_usuario_logado');
+        const usuarioLogado = this.context.usuarioAutenticado;
         return usuarioLogado.id;
     }
 
@@ -53,5 +54,7 @@ class Home extends React.Component {
         )
     }
 }
+
+Home.contextType = AuthContext
 
 export default Home;

@@ -10,4 +10,6 @@ export default class Constants {
     static INFORME_DESCRICAO = 'Informe a descrição';
     static INFORME_VALOR = 'Informe o valor';
     static INFORME_TIPO =  'Informe o tipo';
+
+    static USUARIO_LOGADO = '_usuario_logado';
 }

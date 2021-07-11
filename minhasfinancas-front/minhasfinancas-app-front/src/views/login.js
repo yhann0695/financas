@@ -7,6 +7,8 @@ import UsuarioService from '../app/service/usuarioService';
 import LocalStorageService from '../app/service/localstorageService';
 import { mensagemErro } from '../components/toastr';
 
+import { AuthContext } from '../main/provedorAutenticacao';
+
 import axios from 'axios';
 
 class Login extends React.Component{
@@ -26,7 +28,7 @@ class Login extends React.Component{
             email: this.state.email,
             senha: this.state.senha
         }).then((response) => {
-            LocalStorageService.addItem('_usuario_logado', response.data)
+            this.context.iniciarSessao(response.data)
             this.props.history.push('/home')
         }).catch((erro) => {
             mensagemErro(erro.response.data)
@@ -78,5 +80,7 @@ class Login extends React.Component{
         )
     }
 }
+
+Login.contextType = AuthContext
 
 export default withRouter( Login ) 
