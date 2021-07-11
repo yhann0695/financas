@@ -77,8 +77,8 @@ public class LancamentoService {
     }
 
     public BigDecimal obterSaldoPorUsuario(Long id) {
-        BigDecimal receitas = lancamentoRepository.ObterSaldoPorTipoLancamentoEUsuario(id, TipoLancamento.RECEITA);
-        BigDecimal desepesas = lancamentoRepository.ObterSaldoPorTipoLancamentoEUsuario(id, TipoLancamento.DESPESA);
+        BigDecimal receitas = lancamentoRepository.ObterSaldoPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.RECEITA, StatusLancamento.EFETIVADO);
+        BigDecimal desepesas = lancamentoRepository.ObterSaldoPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.DESPESA, StatusLancamento.EFETIVADO);
 
         if(receitas == null) receitas = BigDecimal.ZERO;
         if(desepesas == null) desepesas = BigDecimal.ZERO;

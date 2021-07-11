@@ -18,6 +18,9 @@ import java.util.Optional;
 @Repository
 public interface LancamentoRepository extends JpaRepository<Lancamento, Long>, LancamentoRepositoryCustom{
 
-    @Query(value = "SELECT SUM(L.valor) FROM Lancamento L JOIN L.usuario U WHERE U.id =:idUsuario and L.tipo =:tipo GROUP BY U" )
-    BigDecimal ObterSaldoPorTipoLancamentoEUsuario(@Param("idUsuario") Long idUsuario, @PathParam("tipo") TipoLancamento tipo);
+    @Query(value = "SELECT SUM(L.valor) FROM Lancamento L JOIN L.usuario U " +
+            "WHERE U.id =:idUsuario and L.tipo =:tipo AND L.status = :status GROUP BY U" )
+    BigDecimal ObterSaldoPorTipoLancamentoEUsuarioEStatus(@Param("idUsuario") Long idUsuario,
+                                                          @Param("tipo") TipoLancamento tipo,
+                                                          @Param("status") StatusLancamento status);
 }
